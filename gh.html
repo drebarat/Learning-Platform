@@ -1,0 +1,2137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrammarMaster - English Learning Platform</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4ade80;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+            
+            /* Background colors */
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e4edf5;
+            --text-primary: #212529;
+            --text-secondary: #555555;
+        }
+
+        /* Dark mode variables - DIUBAH untuk menyesuaikan referensi */
+        [data-theme="dark"] {
+            --bg-primary: #0f172a; /* Warna latar lebih gelap */
+            --bg-secondary: #1e293b; /* Elemen kartu lebih gelap */
+            --bg-tertiary: #0d1424; /* Warna aksen lebih gelap */
+            --text-primary: #e2e8f0; /* Teks lebih terang */
+            --text-secondary: #94a3b8; /* Teks sekunder lebih lembut */
+            --light: #1e293b;
+            --shadow: 0 10px 20px rgba(0,0,0,0.4); /* Bayangan lebih dalam */
+            
+            /* Penyesuaian tambahan */
+            --primary: #60a5fa; /* Warna primer lebih cerah */
+            --secondary: #3b82f6; /* Warna sekunder lebih cerah */
+            --accent: #38bdf8; /* Warna aksen lebih cerah */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .logo h1 {
+            font-weight: 900;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        nav a.active {
+            background: var(--accent);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        
+        nav a.active::after {
+            width: 70%;
+        }
+        
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+            font-size: 1.3rem;
+            margin-left: 15px;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            font-weight: 800;
+            animation: slideIn 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: var(--text-primary);
+            animation: fadeIn 1.2s ease;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.5s;
+        }
+        
+        .btn:hover::after {
+            left: 120%;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 60px 0;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--secondary);
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .feature-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(67, 97, 238, 0.15);
+            border-color: rgba(67, 97, 238, 0.3);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        /* Material Section */
+        .material-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-primary) 100%);
+            border-radius: var(--radius);
+            margin: 30px 155px;
+        }
+        
+        .material-container {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .material-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(67, 97, 238, 0.1);
+            text-align: center;
+        }
+        
+        .material-header h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .material-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .material-text {
+            flex: 1;
+            min-width: 300px;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .material-text h3 {
+            color: var(--primary);
+            margin: 20px 0 15px;
+            font-size: 1.5rem;
+        }
+        
+        .material-text p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+        
+        .formula-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .formula-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .formula-card h4 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .formula-card p {
+            color: var(--text-primary);
+        }
+        
+        .material-example {
+            background: var(--bg-tertiary);
+            border-left: 4px solid var(--accent);
+            padding: 15px 20px;
+            margin: 20px auto;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            max-width: 600px;
+            text-align: left;
+        }
+        
+        .material-example p {
+            color: var(--text-primary);
+        }
+        
+        .material-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .grammar-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .answer-explanation {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        /* Grammar Topics */
+        .topics {
+            padding: 60px 0;
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .topic-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .topic-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .topic-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .topic-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .level {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .beginner {
+            background: rgba(76, 201, 240, 0.2);
+            color: var(--primary);
+        }
+        
+        .intermediate {
+            background: rgba(249, 168, 37, 0.2);
+            color: #f9a825;
+        }
+        
+        .advanced {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+        
+        /* Quiz Section */
+        .quiz-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: var(--radius);
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        [data-theme="dark"] .quiz-container {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .quiz-header h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Level Selection */
+        .level-selection {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .level-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid transparent;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .level-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .level-btn.active {
+            background: var(--accent);
+            border-color: white;
+        }
+        
+        .quiz-progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 18px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .option:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .option.selected {
+            background: var(--accent);
+        }
+        
+        .option input {
+            display: none;
+        }
+        
+        .option span {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+        }
+        
+        .option.selected span {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        
+        .quiz-result {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .quiz-result h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-result .score {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+        
+        .quiz-result .message {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 15px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            position: relative;
+            padding-bottom: 8px;
+        }
+        
+        .footer-column h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #777;
+            font-size: 0.85rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+            transition: var(--transition);
+        }
+        
+        .close-btn:hover {
+            color: var(--danger);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding: 80px 0 40px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .quiz-container {
+                padding: 20px;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+            
+            .material-content {
+                flex-direction: column;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+            }
+            
+            .quiz-controls .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .formula-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .difficulty-selection {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .difficulty-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .material-section {
+                margin: 30px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon floating">G</div>
+                <h1>Gramm<span>arena</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#material">Material</a></li>
+                    <li><a href="#topics">Topics</a></li>
+                    <li><a href="#quiz">Quiz</a></li>
+                    <li><a href="#contact">About</a></li>
+                    <li>
+                        <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
+                            🌙
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>Welcome to Grammarena – A Place to Master English Grammar with Ease!</h2>
+            <p>Improve your English skills with interactive grammar lessons, practical exercises, and engaging quizzes designed for all levels.</p>
+            <a href="#material" class="btn">Start Learning Now</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container">
+        <div class="features">
+            <h2 class="section-title">Key Features</h2>
+            <p class="section-subtitle">Grammarena offers a comprehensive and enjoyable English grammar learning experience</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Comprehensive Material</h3>
+                    <p>Learn grammar from basic to advanced levels with clear explanations and relevant examples in various conversational contexts.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>Interactive Learning</h3>
+                    <p>Make learning fun with animations, interactive simulations, and visualizations that make grammar concepts easy to understand.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Exercises & Quizzes</h3>
+                    <p>Test your understanding with various exercises and quizzes accompanied by detailed explanations and performance analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Material Section -->
+    <section id="material" class="material-section container">
+        <div class="material-container">
+            <div class="material-header">
+                <h2>English Grammar Fundamentals</h2>
+                <p>Explore our comprehensive grammar lessons and examples</p>
+            </div>
+            <div class="material-content">
+                <div class="material-text">
+                    <h3>Why Learn English Grammar?</h3>
+                    <p>Proper grammar is essential for clear communication. It helps you express your ideas accurately and professionally, whether you're writing an email, giving a presentation, or having a conversation.</p>
+                    
+                    <h3>How Grammarena Helps You Learn</h3>
+                    <p>Grammarena offers essential learning support for mastering English grammar through:</p>
+                    <div class="material-example">
+<p>✔ Clear explanations with structured grammar lessons</p>
+    <p>✔ Examples that illustrate correct usage</p>
+    <p>✔ Topic-based learning organized by level</p>
+    <p>✔ Interactive quizzes to test understanding</p>
+                    </div>
+                    
+                    <p>Select any grammar topic below to begin learning!</p>
+                </div>
+                <div class="material-image">
+                    <div class="grammar-img" style="background: linear-gradient(45deg, #4cc9f0, #4361ee); width: 100%; height: 300px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; padding: 20px; text-align: center;">
+                        <div>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 20px;">Grammar Learning Tips</h3>
+                            <p style="margin-bottom: 10px;">1. Practice daily with short sessions</p>
+                            <p style="margin-bottom: 10px;">2. Focus on one rule at a time</p>
+                            <p style="margin-bottom: 10px;">3. Apply what you learn in writing</p>
+                            <p style="margin-bottom: 10px;">4. Review regularly</p>
+                            <p style="margin-bottom: 10px;">5. Don't be afraid to make mistakes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grammar Topics -->
+    <section id="topics" class="topics container">
+        <h2 class="section-title">Grammar Topics</h2>
+        <p class="section-subtitle">Learn all essential aspects of English grammar with a step-by-step approach</p>
+        <div class="topics-grid">
+            <div class="topic-card">
+                <span class="level beginner">Beginner</span>
+                <h3>Present Tenses</h3>
+                <p>Learn to use Present Simple, Present Continuous, and Present Perfect in various contexts.</p>
+                <button class="btn btn-outline learn-btn" data-topic="present">Learn</button>
+            </div>
+            <div class="topic-card">
+                <span class="level beginner">Beginner</span>
+                <h3>Past Tenses</h3>
+                <p>Master the use of Past Simple, Past Continuous, and Past Perfect for conversations about the past.</p>
+                <button class="btn btn-outline learn-btn" data-topic="past">Learn</button>
+            </div>
+            <div class="topic-card">
+                <span class="level intermediate">Intermediate</span>
+                <h3>Future Tenses</h3>
+                <p>Learn different ways to express the future: will, going to, present continuous, and future perfect.</p>
+                <button class="btn btn-outline learn-btn" data-topic="future">Learn</button>
+            </div>
+            <div class="topic-card">
+                <span class="level intermediate">Intermediate</span>
+                <h3>Conditionals</h3>
+                <p>Understand the use of conditional sentences (types 0, 1, 2)</p>
+                <button class="btn btn-outline learn-btn" data-topic="conditionals">Learn</button>
+            </div>
+            <div class="topic-card">
+                <span class="level advanced">Advanced</span>
+                <h3>Reported Speech</h3>
+                <p>Learn how to report what someone said with appropriate tense changes and structure.</p>
+                <button class="btn btn-outline learn-btn" data-topic="reported">Learn</button>
+            </div>
+            <div class="topic-card">
+                <span class="level advanced">Advanced</span>
+                <h3>Modal Verbs</h3>
+                <p>Master the use of modal verbs (can, could, may, might, must, should, etc.) in various situations.</p>
+                <button class="btn btn-outline learn-btn" data-topic="modals">Learn</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+       <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="container">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h2>Grammar Challenge</h2>
+                    <p>Test your knowledge with this interactive quiz</p>
+                </div>
+                
+                <!-- Level Selection -->
+                <div class="level-selection" id="level-selection">
+                    <button class="level-btn" data-level="easy">Easy</button>
+                    <button class="level-btn" data-level="medium">Medium</button>
+                    <button class="level-btn" data-level="hard">Hard</button>
+                </div>
+                
+                <div class="quiz-progress">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <!-- Tambahkan elemen pertanyaan secara statis di sini -->
+                <div id="question" class="question"></div>
+                
+                <div class="options" id="options">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="btn" id="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button class="btn" id="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+                
+                <div class="quiz-result" id="quiz-result">
+                    <h3>Quiz Results</h3>
+                    <div class="score" id="score">0/10</div>
+                    <div class="message" id="message"></div>
+                    <button class="btn" id="restart-btn">Restart Quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Grammarena</h3>
+                    <p>An interactive English grammar learning platform with comprehensive material and practical exercises for all levels.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Learning Topics</h3>
+                    <ul>
+                        <li><a href="#">Tenses</a></li>
+                        <li><a href="#">Conditionals</a></li>
+                        <li><a href="#">Modal Verbs</a></li>
+                        <li><a href="#">Reported Speech</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Project Info</h3>
+                    <ul>
+                         <li>Created by: Andreas Nugraha Hutabarat</li>
+           <li>Course: English Conversation</li>
+          <li>Institution: Politeknik Negeri Medan</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Grammarena. Created as part of the English Language final project.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Grammar Material -->
+    <div class="modal" id="grammar-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Grammar material data
+        const grammarData = {
+            present: {
+                title: "Present Tenses in English",
+                content: `
+                    <h2>Present Tenses</h2>
+                    <p>Present tenses describe actions happening now, regularly, or generally true.</p>
+                    
+                    <div class="formula-container">
+                        <div class="formula-card">
+                            <h4>Present Simple</h4>
+                            <p><strong>Positive:</strong> Subject + base verb (add 's' for he/she/it)</p>
+                            <p><strong>Negative:</strong> Subject + do/does + not + base verb</p>
+                            <p><strong>Question:</strong> Do/Does + subject + base verb?</p>
+                            <div class="material-example">
+                                <p>- I <strong>work</strong> at a bank.</p>
+                                <p>- She <strong>does not live</strong> in London.</p>
+                                <p>- <strong>Do</strong> you <strong>like</strong> coffee?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Present Continuous</h4>
+                            <p><strong>Positive:</strong> Subject + am/is/are + verb-ing</p>
+                            <p><strong>Negative:</strong> Subject + am/is/are + not + verb-ing</p>
+                            <p><strong>Question:</strong> Am/Is/Are + subject + verb-ing?</p>
+                            <div class="material-example">
+                                <p>- I <strong>am studying</strong> English now.</p>
+                                <p>- They <strong>are not playing</strong> football.</p>
+                                <p>- <strong>Is</strong> she <strong>working</strong> today?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Present Perfect</h4>
+                            <p><strong>Positive:</strong> Subject + have/has + past participle</p>
+                            <p><strong>Negative:</strong> Subject + have/has + not + past participle</p>
+                            <p><strong>Question:</strong> Have/Has + subject + past participle?</p>
+                            <div class="material-example">
+                                <p>- I <strong>have visited</strong> Paris three times.</p>
+                                <p>- She <strong>has not finished</strong> her work.</p>
+                                <p>- <strong>Have</strong> you <strong>eaten</strong> lunch?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Practice Exercises</h3>
+                    <div class="material-example">
+                        <p>1. She usually _______ (go) to school by bus.</p>
+                        <p>2. Right now, I _______ (read) a book.</p>
+                        <p>3. They _______ (not finish) their homework yet.</p>
+                    </div>
+                    
+                    <button class="btn" id="show-answers">Show Answers & Explanation</button>
+                    
+                    <div class="answer-explanation" id="answer-explanation">
+                        <h4>Answers:</h4>
+                        <p>1. <strong>goes</strong> - Habitual action (Present Simple)</p>
+                        <p>2. <strong>am reading</strong> - Action happening now (Present Continuous)</p>
+                        <p>3. <strong>have not finished</strong> - Action that started in the past and continues to present (Present Perfect)</p>
+                        
+                        <h4>Explanation:</h4>
+                        <p>Present Simple is used for habits and routines. Present Continuous is used for actions happening at the moment of speaking. Present Perfect is used for actions that started in the past and continue to the present.</p>
+                    </div>
+                `
+            },
+            past: {
+                title: "Past Tenses",
+                content: `
+                    <h2>Past Tenses in English</h2>
+                    <p>Past tenses describe actions that happened and were completed in the past.</p>
+                    
+                    <div class="formula-container">
+                        <div class="formula-card">
+                            <h4>Past Simple</h4>
+                            <p><strong>Positive:</strong> Subject + past tense verb</p>
+                            <p><strong>Negative:</strong> Subject + did + not + base verb</p>
+                            <p><strong>Question:</strong> Did + subject + base verb?</p>
+                            <div class="material-example">
+                                <p>- I <strong>worked</strong> yesterday.</p>
+                                <p>- She <strong>did not visit</strong> Paris last year.</p>
+                                <p>- <strong>Did</strong> they <strong>play</strong> football?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Past Continuous</h4>
+                            <p><strong>Positive:</strong> Subject + was/were + verb-ing</p>
+                            <p><strong>Negative:</strong> Subject + was/were + not + verb-ing</p>
+                            <p><strong>Question:</strong> Was/Were + subject + verb-ing?</p>
+                            <div class="material-example">
+                                <p>- I <strong>was studying</strong> when you called.</p>
+                                <p>- They <strong>were not playing</strong> at 8 PM.</p>
+                                <p>- <strong>Was</strong> she <strong>working</strong> all day?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Past Perfect</h4>
+                            <p><strong>Positive:</strong> Subject + had + past participle</p>
+                            <p><strong>Negative:</strong> Subject + had + not + past participle</p>
+                            <p><strong>Question:</strong> Had + subject + past participle?</p>
+                            <div class="material-example">
+                                <p>- I <strong>had finished</strong> my homework before I went out.</p>
+                                <p>- She <strong>had not left</strong> when I arrived.</p>
+                                <p>- <strong>Had</strong> they <strong>seen</strong> the movie before?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Practice Exercises</h3>
+                    <div class="material-example">
+                        <p>1. When I was young, I _______ (play) tennis every day.</p>
+                        <p>2. They _______ (watch) TV when the phone rang.</p>
+                        <p>3. By the time we arrived, the movie _______ (already start).</p>
+                    </div>
+                    
+                    <button class="btn" id="show-answers">Show Answers & Explanation</button>
+                    
+                    <div class="answer-explanation" id="answer-explanation">
+                        <h4>Answers:</h4>
+                        <p>1. <strong>played</strong> - Habitual action in the past (Past Simple)</p>
+                        <p>2. <strong>were watching</strong> - Action in progress at a specific time in the past (Past Continuous)</p>
+                        <p>3. <strong>had already started</strong> - Action completed before another past action (Past Perfect)</p>
+                        
+                        <h4>Explanation:</h4>
+                        <p>Past Simple is used for completed actions in the past. Past Continuous is used for actions in progress at a specific time in the past. Past Perfect is used for actions completed before another past action.</p>
+                    </div>
+                `
+            },
+            future: {
+                title: "Future Tenses",
+                content: `
+                    <h2>Future Tenses in English</h2>
+                    <p>Future tenses describe actions that will happen or are planned to happen.</p>
+                    
+                    <div class="formula-container">
+                        <div class="formula-card">
+                            <h4>Will Future</h4>
+                            <p><strong>Positive:</strong> Subject + will + base verb</p>
+                            <p><strong>Negative:</strong> Subject + will + not + base verb</p>
+                            <p><strong>Question:</strong> Will + subject + base verb?</p>
+                            <div class="material-example">
+                                <p>- I <strong>will help</strong> you tomorrow.</p>
+                                <p>- She <strong>will not be</strong> here next week.</p>
+                                <p>- <strong>Will</strong> they <strong>come</strong> to the party?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Going to Future</h4>
+                            <p><strong>Positive:</strong> Subject + am/is/are + going to + base verb</p>
+                            <p><strong>Negative:</strong> Subject + am/is/are + not + going to + base verb</p>
+                            <p><strong>Question:</strong> Am/Is/Are + subject + going to + base verb?</p>
+                            <div class="material-example">
+                                <p>- I <strong>am going to study</strong> medicine.</p>
+                                <p>- It <strong>is not going to rain</strong> today.</p>
+                                <p>- <strong>Are</strong> you <strong>going to travel</strong> next year?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Present Continuous for Future</h4>
+                            <p><strong>Positive:</strong> Subject + am/is/are + verb-ing</p>
+                            <p><strong>Negative:</strong> Subject + am/is/are + not + verb-ing</p>
+                            <p><strong>Question:</strong> Am/Is/Are + subject + verb-ing?</p>
+                            <div class="material-example">
+                                <p>- I <strong>am meeting</strong> John tomorrow.</p>
+                                <p>- She <strong>is not flying</strong> to Paris.</p>
+                                <p>- <strong>Are</strong> we <strong>having</strong> a party?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Practice Exercises</h3>
+                    <div class="material-example">
+                        <p>1. I think it _______ (rain) later.</p>
+                        <p>2. They _______ (buy) a new car next month.</p>
+                        <p>3. What _______ you _______ (do) this weekend?</p>
+                    </div>
+                    
+                    <button class="btn" id="show-answers">Show Answers & Explanation</button>
+                    
+                    <div class="answer-explanation" id="answer-explanation">
+                        <h4>Answers:</h4>
+                        <p>1. <strong>will rain</strong> - Prediction (Will Future)</p>
+                        <p>2. <strong>are going to buy</strong> - Plan or intention (Going to Future)</p>
+                        <p>3. <strong>are, doing</strong> - Fixed arrangement (Present Continuous for Future)</p>
+                        
+                        <h4>Explanation:</h4>
+                        <p>Will Future is used for predictions and spontaneous decisions. Going to Future is used for plans and intentions. Present Continuous for Future is used for fixed arrangements.</p>
+                    </div>
+                `
+            },
+            conditionals: {
+                title: "Conditional Sentences",
+                content: `
+                    <h2>Conditional Sentences in English</h2>
+                    <p>Conditional sentences express possible or imaginary situations and their consequences.</p>
+                    
+                    <div class="formula-container">
+                        <div class="formula-card">
+                            <h4>Zero Conditional</h4>
+                            <p><strong>Positive:</strong> If + present simple, present simple</p>
+                            <p><strong>Negative:</strong> If + do/does + not + verb, do/does + not + verb</p>
+                            <p><strong>Question:</strong> If + present simple, do/does + subject + verb?</p>
+                            <div class="material-example">
+                                <p>- If you <strong>heat</strong> ice, it <strong>melts</strong>.</p>
+                                <p>- If you <strong>don't water</strong> plants, they <strong>die</strong>.</p>
+                                <p>- <strong>If</strong> it <strong>rains</strong>, <strong>do</strong> you <strong>cancel</strong> the picnic?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>First Conditional</h4>
+                            <p><strong>Positive:</strong> If + present simple, will + base verb</p>
+                            <p><strong>Negative:</strong> If + present simple, will + not + base verb</p>
+                            <p><strong>Question:</strong> If + present simple, will + subject + base verb?</p>
+                            <div class="material-example">
+                                <p>- If it <strong>rains</strong>, we <strong>will cancel</strong> the picnic.</p>
+                                <p>- If I <strong>have</strong> time, I <strong>will not go</strong> shopping.</p>
+                                <p>- <strong>If</strong> you <strong>study</strong>, <strong>will</strong> you <strong>pass</strong> the exam?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Second Conditional</h4>
+                            <p><strong>Positive:</strong> If + past simple, would + base verb</p>
+                            <p><strong>Negative:</strong> If + past simple, would + not + base verb</p>
+                            <p><strong>Question:</strong> If + past simple, would + subject + base verb?</p>
+                            <div class="material-example">
+                                <p>- If I <strong>won</strong> the lottery, I <strong>would buy</strong> a house.</p>
+                                <p>- If I <strong>were</strong> you, I <strong>would not go</strong> there.</p>
+                                <p>- <strong>If</strong> you <strong>had</strong> more time, <strong>would</strong> you <strong>travel</strong> more?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Practice Exercises</h3>
+                    <div class="material-example">
+                        <p>1. If you _______ (heat) water to 100°C, it _______ (boil).</p>
+                        <p>2. If it _______ (rain), we _______ (cancel) the picnic.</p>
+                        <p>3. If I _______ (be) you, I _______ (study) more.</p>
+                    </div>
+                    
+                    <button class="btn" id="show-answers">Show Answers & Explanation</button>
+                    
+                    <div class="answer-explanation" id="answer-explanation">
+                        <h4>Answers:</h4>
+                        <p>1. <strong>heat, boils</strong> - General truth (Zero Conditional)</p>
+                        <p>2. <strong>rains, will cancel</strong> - Real future possibility (First Conditional)</p>
+                        <p>3. <strong>were, would study</strong> - Unreal present situation (Second Conditional)</p>
+                        
+                        <h4>Explanation:</h4>
+                        <p>Zero Conditional expresses general truths. First Conditional expresses real future possibilities. Second Conditional expresses unreal or imaginary situations in the present or future.</p>
+                    </div>
+                `
+            },
+            reported: {
+                title: "Reported Speech",
+                content: `
+                    <h2>Reported Speech in English</h2>
+                    <p>Reported speech is used to tell someone what another person said without using their exact words.</p>
+                    
+                    <div class="formula-container">
+                        <div class="formula-card">
+                            <h4>Statements</h4>
+                            <p><strong>Positive:</strong> Subject + said (that) + reported speech</p>
+                            <p><strong>Negative:</strong> Subject + said (that) + subject + did not + verb</p>
+                            <p><strong>Question:</strong> Subject + asked + if/whether + reported speech</p>
+                            <div class="material-example">
+                                <p>- She said, "I'm happy" → She <strong>said she was happy</strong>.</p>
+                                <p>- He said, "I don't know" → He <strong>said he didn't know</strong>.</p>
+                                <p>- They asked, "Are you coming?" → They <strong>asked if I was coming</strong>.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Tense Changes</h4>
+                            <p>Present Simple → Past Simple</p>
+                            <p>Present Continuous → Past Continuous</p>
+                            <p>Present Perfect → Past Perfect</p>
+                            <p>Will → Would</p>
+                            <p>Can → Could</p>
+                            <p>May → Might</p>
+                            <div class="material-example">
+                                <p>- "I <strong>work</strong> here" → He said he <strong>worked</strong> there.</p>
+                                <p>- "I <strong>am working</strong>" → She said she <strong>was working</strong>.</p>
+                                <p>- "I <strong>will help</strong>" → They said they <strong>would help</strong>.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Time Expressions</h4>
+                            <p>Today → That day</p>
+                            <p>Tomorrow → The next day</p>
+                            <p>Yesterday → The day before</p>
+                            <p>Now → Then</p>
+                            <p>Here → There</p>
+                            <p>This → That</p>
+                            <div class="material-example">
+                                <p>- "I'll see you <strong>tomorrow</strong>" → He said he would see me <strong>the next day</strong>.</p>
+                                <p>- "I was here <strong>yesterday</strong>" → She said she was there <strong>the day before</strong>.</p>
+                                <p>- "<strong>This</strong> is my book" → He said <strong>that</strong> was his book.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Practice Exercises</h3>
+                    <div class="material-example">
+                        <p>1. "I like ice cream." → She said she _______ ice cream.</p>
+                        <p>2. "We are going to the party." → They said they _______ to the party.</p>
+                        <p>3. "I will call you tomorrow." → He said he _______ me the next day.</p>
+                    </div>
+                    
+                    <button class="btn" id="show-answers">Show Answers & Explanation</button>
+                    
+                    <div class="answer-explanation" id="answer-explanation">
+                        <h4>Answers:</h4>
+                        <p>1. <strong>liked</strong> - Present Simple becomes Past Simple</p>
+                        <p>2. <strong>were going</strong> - Present Continuous becomes Past Continuous</p>
+                        <p>3. <strong>would call</strong> - Will becomes Would</p>
+                        
+                        <h4>Explanation:</h4>
+                        <p>In reported speech, we generally shift tenses back. Present tenses become past tenses, and future forms become conditional forms. Time expressions also change to reflect the time shift.</p>
+                    </div>
+                `
+            },
+            modals: {
+                title: "Modal Verbs",
+                content: `
+                    <h2>Modal Verbs in English</h2>
+                    <p>Modal verbs are auxiliary verbs that express ability, permission, obligation, possibility, and more.</p>
+                    
+                    <div class="formula-container">
+                        <div class="formula-card">
+                            <h4>Ability & Permission</h4>
+                            <p><strong>Can:</strong> Present ability/permission</p>
+                            <p><strong>Could:</strong> Past ability/polite permission</p>
+                            <p><strong>May:</strong> Formal permission</p>
+                            <div class="material-example">
+                                <p>- I <strong>can</strong> swim.</p>
+                                <p>- <strong>Could</strong> I borrow your pen?</p>
+                                <p>- <strong>May</strong> I go to the restroom?</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Obligation & Necessity</h4>
+                            <p><strong>Must:</strong> Strong obligation</p>
+                            <p><strong>Have to:</strong> External obligation</p>
+                            <p><strong>Should:</strong> Advice/recommendation</p>
+                            <div class="material-example">
+                                <p>- You <strong>must</strong> wear a seatbelt.</p>
+                                <p>- I <strong>have to</strong> work tomorrow.</p>
+                                <p>- You <strong>should</strong> see a doctor.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="formula-card">
+                            <h4>Possibility & Deduction</h4>
+                            <p><strong>Might:</strong> Possible but uncertain</p>
+                            <p><strong>May:</strong> Possible</p>
+                            <p><strong>Must:</strong> Logical deduction</p>
+                            <div class="material-example">
+                                <p>- It <strong>might</strong> rain later.</p>
+                                <p>- She <strong>may</strong> arrive soon.</p>
+                                <p>- He <strong>must</strong> be tired after his trip.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3>Practice Exercises</h3>
+                    <div class="material-example">
+                        <p>1. You _______ (should/must) see that movie - it's excellent!</p>
+                        <p>2. _______ (May/Can) I borrow your pen, please?</p>
+                        <p>3. When I was younger, I _______ (can/could) run very fast.</p>
+                    </div>
+                    
+                    <button class="btn" id="show-answers">Show Answers & Explanation</button>
+                    
+                    <div class="answer-explanation" id="answer-explanation">
+                        <h4>Answers:</h4>
+                        <p>1. <strong>should</strong> - Recommendation</p>
+                        <p>2. <strong>May</strong> - Formal permission (Can is also acceptable informally)</p>
+                        <p>3. <strong>could</strong> - Past ability</p>
+                        
+                        <h4>Explanation:</h4>
+                        <p>Modal verbs are followed by the base form of the main verb. They don't change form for third person singular. Each modal has specific meanings and uses depending on context.</p>
+                    </div>
+                `
+            }
+        };
+
+        // Data kuis untuk 3 level (masing-masing 10 soal)
+        const quizData = {
+            easy: [
+                {
+                    question: "Which sentence uses Present Simple Tense?",
+                    options: [
+                        "She is reading a book now.",
+                        "He goes to school every day.",
+                        "They are playing football.",
+                        "I will visit my grandma tomorrow."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Choose the correct plural form: one child, two...",
+                    options: [
+                        "childs",
+                        "children",
+                        "childes",
+                        "childies"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which is the correct possessive form?",
+                    options: [
+                        "The dogs bone",
+                        "The dog's bone",
+                        "The dogs' bone",
+                        "The dog bone"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Complete the sentence: I ____ hungry.",
+                    options: [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "Which sentence is correct?",
+                    options: [
+                        "He don't like coffee.",
+                        "He doesn't likes coffee.",
+                        "He doesn't like coffee.",
+                        "He not like coffee."
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Choose the correct past tense of 'go'.",
+                    options: [
+                        "goed",
+                        "went",
+                        "gone",
+                        "goes"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which is a correct question?",
+                    options: [
+                        "Where you live?",
+                        "Where do you live?",
+                        "Where you do live?",
+                        "Where does you live?"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Choose the correct form: She has ____ apple.",
+                    options: [
+                        "a",
+                        "an",
+                        "the",
+                        "some"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which sentence uses 'can' correctly?",
+                    options: [
+                        "I can to swim.",
+                        "I can swim.",
+                        "I can swimming.",
+                        "I can swims."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Complete the sentence: They ____ to the party yesterday.",
+                    options: [
+                        "go",
+                        "goes",
+                        "went",
+                        "gone"
+                    ],
+                    correct: 2
+                }
+            ],
+            medium: [
+                {
+                    question: "Which sentence uses Present Perfect Tense?",
+                    options: [
+                        "She goes to school every day.",
+                        "I have finished my homework just now.",
+                        "They lived here since 2010.",
+                        "We are studying for the exam."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Choose the sentence that uses Past Continuous Tense:",
+                    options: [
+                        "I was watching TV when she called.",
+                        "I watched TV last night.",
+                        "I have watched that movie.",
+                        "I will watch TV tomorrow."
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "Which one is a passive voice sentence?",
+                    options: [
+                        "The teacher explains the lesson.",
+                        "The lesson is explained by the teacher.",
+                        "The teacher is explaining the lesson.",
+                        "The teacher explained the lesson."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Select the sentence that uses Future Perfect Tense:",
+                    options: [
+                        "I will go to the party tomorrow.",
+                        "By next year, I will have graduated.",
+                        "I am going to study tonight.",
+                        "I have studied for the test."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Which one is a Conditional Sentence Type 2?",
+                    options: [
+                        "If it rains, we will cancel the picnic.",
+                        "If it rained, we would cancel the picnic.",
+                        "If it had rained, we would have canceled the picnic.",
+                        "If it rains, we cancel the picnic."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Choose the correct reported speech: She said, 'I am happy'.",
+                    options: [
+                        "She said I am happy.",
+                        "She said she is happy.",
+                        "She said she was happy.",
+                        "She said she had been happy."
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Which modal verb expresses obligation?",
+                    options: [
+                        "can",
+                        "might",
+                        "must",
+                        "could"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Complete the sentence: If I ____ you, I would study harder.",
+                    options: [
+                        "am",
+                        "was",
+                        "were",
+                        "be"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Which sentence contains a relative clause?",
+                    options: [
+                        "She went to the store.",
+                        "The book that I read was interesting.",
+                        "They are playing soccer.",
+                        "He will arrive tomorrow."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Choose the correct preposition: She is good ____ math.",
+                    options: [
+                        "at",
+                        "in",
+                        "on",
+                        "for"
+                    ],
+                    correct: 0
+                }
+            ],
+            hard: [
+                {
+                    question: "Which sentence uses the subjunctive mood correctly?",
+                    options: [
+                        "I suggest that he goes to the doctor.",
+                        "I suggest that he go to the doctor.",
+                        "I suggest that he went to the doctor.",
+                        "I suggest that he going to the doctor."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Identify the sentence with correct participle clause:",
+                    options: [
+                        "Running down the street, the dog was chasing the ball.",
+                        "Running down the street, the ball was chased by the dog.",
+                        "Running down the street, the ball was chasing the dog.",
+                        "Running down the street, the dog chasing the ball."
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "Choose the correct inversion: Only when...",
+                    options: [
+                        "Only when he arrived we started the meeting.",
+                        "Only when he arrived we start the meeting.",
+                        "Only when he arrived did we start the meeting.",
+                        "Only when he arrived started we the meeting."
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Which sentence uses 'were' correctly in a conditional?",
+                    options: [
+                        "If he were here, he would help us.",
+                        "If he was here, he would help us.",
+                        "If he were here, he will help us.",
+                        "If he was here, he will help us."
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "Select the correct mixed conditional:",
+                    options: [
+                        "If I had studied harder, I would pass the exam.",
+                        "If I studied harder, I would have passed the exam.",
+                        "If I had studied harder, I would have passed the exam.",
+                        "If I study harder, I will pass the exam."
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "Which sentence has correct subject-verb agreement?",
+                    options: [
+                        "The team are winning the game.",
+                        "The team is winning the game.",
+                        "The team were winning the game.",
+                        "The team be winning the game."
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Choose the correct use of 'whom':",
+                    options: [
+                        "Whom is coming to the party?",
+                        "To whom did you give the book?",
+                        "Whom did give you the book?",
+                        "Whom are you talking?"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "Identify the correct cleft sentence:",
+                    options: [
+                        "It was the movie that I enjoyed yesterday.",
+                        "I enjoyed the movie yesterday that.",
+                        "The movie that I enjoyed yesterday.",
+                        "That I enjoyed the movie yesterday."
+                    ],
+                    correct: 0
+                },
+                {
+                    question: "Which sentence uses the future perfect continuous?",
+                    options: [
+                        "By next year, I will live here for 10 years.",
+                        "By next year, I will have lived here for 10 years.",
+                        "By next year, I will have been living here for 10 years.",
+                        "By next year, I will be living here for 10 years."
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "Choose the sentence with correct punctuation:",
+                    options: [
+                        "The students books were left in the classroom.",
+                        "The students' books were left in the classroom.",
+                        "The student's books were left in the classroom.",
+                        "The students's books were left in the classroom."
+                    ],
+                    correct: 1
+                }
+            ]
+        };
+
+        // Variabel kuis
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedOption = -1;
+        let selectedLevel = null;
+        let currentQuizData = [];
+
+        // Elemen DOM
+       const optionsEl = document.getElementById('options');
+    const progressBar = document.getElementById('progress-bar');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const quizResult = document.getElementById('quiz-result');
+    const scoreEl = document.getElementById('score');
+    const messageEl = document.getElementById('message');
+    const restartBtn = document.getElementById('restart-btn');
+    const modal = document.getElementById('grammar-modal');
+    const modalContent = document.getElementById('modal-content');
+    const closeModal = document.getElementById('close-modal');
+    const learnBtns = document.querySelectorAll('.learn-btn');
+    const header = document.getElementById('header');
+    const navLinks = document.querySelectorAll('nav a');
+    const themeToggle = document.getElementById('theme-toggle');
+    const levelSelection = document.getElementById('level-selection');
+    const levelBtns = document.querySelectorAll('.level-btn');
+
+let questionEl = document.getElementById('question');
+    if (!questionEl) {
+        questionEl = document.createElement('div');
+        questionEl.id = 'question';
+        questionEl.className = 'question';
+        const quizContainer = document.querySelector('.quiz-container');
+        const optionsElement = document.getElementById('options');
+        if (quizContainer && optionsElement) {
+            quizContainer.insertBefore(questionEl, optionsElement);
+        }
+    }
+
+        // Tampilkan pertanyaan
+        function showQuestion() {
+            const question = currentQuizData[currentQuestion];
+            questionEl.textContent = question.question;
+            
+            optionsEl.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.classList.add('option');
+                optionEl.innerHTML = `
+                    <input type="radio" name="answer" id="option${index}">
+                    <label for="option${index}">
+                        <span>${String.fromCharCode(65 + index)}</span>
+                        ${option}
+                    </label>
+                `;
+                
+                optionEl.addEventListener('click', () => {
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    optionEl.classList.add('selected');
+                    selectedOption = index;
+                });
+                
+                optionsEl.appendChild(optionEl);
+            });
+            
+            // Update progress bar
+            progressBar.style.width = `${((currentQuestion + 1) / currentQuizData.length) * 100}%`;
+            
+            // Atur status tombol
+            prevBtn.disabled = currentQuestion === 0;
+        }
+
+        // Periksa jawaban
+        function checkAnswer() {
+            if (selectedOption === currentQuizData[currentQuestion].correct) {
+                score++;
+            }
+        }
+
+        // Tampilkan hasil
+        function showResult() {
+            quizResult.style.display = 'block';
+            optionsEl.style.display = 'none';
+            questionEl.style.display = 'none';
+            document.querySelector('.quiz-progress').style.display = 'none';
+            document.querySelector('.quiz-controls').style.display = 'none';
+            levelSelection.style.display = 'none';
+            
+            scoreEl.textContent = `${score}/${currentQuizData.length}`;
+            
+            let message = '';
+            if (score === currentQuizData.length) {
+                message = 'Excellent! Your grammar mastery is outstanding.';
+            } else if (score >= currentQuizData.length * 0.8) {
+                message = 'Great job! Your grammar understanding is solid.';
+            } else if (score >= currentQuizData.length * 0.6) {
+                message = 'Good effort, you have a good grasp of grammar.';
+            } else if (score >= currentQuizData.length * 0.4) {
+                message = 'Not bad, but more practice is needed.';
+            } else {
+                message = 'Keep studying and practicing to improve.';
+            }
+            
+            messageEl.textContent = message;
+        }
+
+        // Tampilkan materi grammar
+        function showGrammar(topic) {
+            const content = grammarData[topic];
+            modalContent.innerHTML = `
+                <h2>${content.title}</h2>
+                ${content.content}
+            `;
+            modal.style.display = 'flex';
+            
+            // Tambahkan event listener untuk tombol "Show Answers"
+            setTimeout(() => {
+                const showAnswersBtn = document.getElementById('show-answers');
+                if (showAnswersBtn) {
+                    showAnswersBtn.addEventListener('click', () => {
+                        const explanation = document.getElementById('answer-explanation');
+                        if (explanation) {
+                            explanation.style.display = 'block';
+                            showAnswersBtn.style.display = 'none';
+                        }
+                    });
+                }
+            }, 100);
+        }
+
+        // Fungsi untuk mengupdate navigasi aktif
+        function updateActiveNav() {
+            const scrollPosition = window.scrollY + 200;
+            
+            document.querySelectorAll('section').forEach(section => {
+                const sectionId = section.getAttribute('id');
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            const isDarkMode = document.body.getAttribute('data-theme') === 'dark';
+            document.body.setAttribute('data-theme', isDarkMode ? 'light' : 'dark');
+            themeToggle.textContent = isDarkMode ? '🌙' : '☀️';
+            localStorage.setItem('theme', isDarkMode ? 'light' : 'dark');
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', () => {
+            if (selectedOption === -1) {
+                alert('Please select an answer!');
+                return;
+            }
+            
+            checkAnswer();
+            selectedOption = -1;
+            
+            if (currentQuestion < currentQuizData.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showResult();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentQuestion--;
+            showQuestion();
+        });
+
+        restartBtn.addEventListener('click', () => {
+            currentQuestion = 0;
+            score = 0;
+            selectedOption = -1;
+            selectedLevel = null;
+            
+            quizResult.style.display = 'none';
+            optionsEl.style.display = 'grid';
+            questionEl.style.display = 'block';
+            document.querySelector('.quiz-progress').style.display = 'block';
+            document.querySelector('.quiz-controls').style.display = 'flex';
+            levelSelection.style.display = 'flex';
+            
+            optionsEl.innerHTML = '';
+            progressBar.style.width = '0';
+            
+            levelBtns.forEach(btn => btn.classList.remove('active'));
+        });
+
+        // Event listeners untuk tombol belajar
+        learnBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const topic = btn.getAttribute('data-topic');
+                showGrammar(topic);
+            });
+        });
+
+        // Event listener untuk menutup modal
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Tutup modal saat mengklik di luar konten
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Event listener untuk tombol level
+        levelBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const level = btn.getAttribute('data-level');
+                selectedLevel = level;
+                currentQuizData = quizData[level];
+                
+                // Update UI
+                levelBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                currentQuestion = 0;
+                score = 0;
+                selectedOption = -1;
+                
+                showQuestion();
+            });
+        });
+
+        // Event listener untuk dark mode toggle
+        themeToggle.addEventListener('click', toggleDarkMode);
+
+        // Animasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animasi kartu fitur
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.2}s`;
+                card.style.opacity = '0';
+            });
+            
+            // Animasi kartu topik
+            const topicCards = document.querySelectorAll('.topic-card');
+            topicCards.forEach((card, index) => {
+                card.style.animation = `slideIn 0.6s ease forwards ${index * 0.15}s`;
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+            });
+            
+            // Tampilkan pertanyaan pertama
+            
+            // Smooth scrolling untuk navigasi
+            document.querySelectorAll('nav a, .btn').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    if(this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        if(targetId === '#') return;
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Set dark mode dari localStorage
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Efek scroll header
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            // Update navigasi aktif
+            updateActiveNav();
+        });
+
+        // Inisialisasi navigasi aktif
+        updateActiveNav();
+    </script>
+</body>
+</html>
